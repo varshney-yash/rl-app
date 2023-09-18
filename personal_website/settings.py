@@ -151,4 +151,4 @@ cloudinary.config(
   api_secret = "Rc4MD6MMwUFPQws4tZQranfleik" 
 )
 
-CSRF_TRUSTED_ORIGINS = ['https://rl-app-production.up.railway.app/']
+CSRF_TRUSTED_ORIGINS = ['https://rl-app-production.up.railway.app']

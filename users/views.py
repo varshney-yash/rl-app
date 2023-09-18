@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .forms import userRegisterForm,UserUpdateForm,ProfileUpdateForm
+from .forms import userRegisterForm,UserUpdateForm,ProfileUpdateForm, BioUpdateForm
 from .models import Profile
 from django.views.generic import DetailView
 
@@ -23,11 +23,11 @@ def profile(request):
     if request.method == 'POST':
         u_form = UserUpdateForm(request.POST, instance=request.user)
         p_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
-        bio_form = ProfileUpdateForm(request.POST,instance=request.user.profile)
+        bio_form = BioUpdateForm(request.POST,instance=request.user.profile)
     else:
         u_form = UserUpdateForm(instance=request.user)
         p_form = ProfileUpdateForm()
-        bio_form = ProfileUpdateForm(instance=request.user.profile)
+        bio_form = BioUpdateForm(instance=request.user.profile)
 
     if u_form.is_valid():
         u_form.save()

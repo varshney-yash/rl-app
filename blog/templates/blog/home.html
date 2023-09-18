@@ -1,0 +1,42 @@
+{% extends "blog/base.html" %}
+
+{% block content %}
+<main class="container mx-auto mt-6">
+    <h2 class="text-3xl font-semibold mb-4">Latest Blog Posts</h2>
+    <div class="flex justify-center space-x-4">
+        <!-- Blog Posts Section (75%) -->
+        <section class="w-3/4 bg-gray-100 rounded-lg shadow-md p-6" style="max-height: calc(100vh - 200px); overflow-y: auto; overflow-x: hidden;">            <!-- Replace the following with your blog post content -->
+            {% for post in posts %}
+                <div class="mb-6 bg-white rounded-lg p-4">
+                    <div class="flex items-center space-x-4 mb-2">
+                        {% if post.author.profile.image %}
+                            <img class="rounded-full w-20 h-20" src="{{ post.author.profile.image.url }}" alt="{{ user.username }}">
+                        {% endif %}
+                        <h2 class="text-xl font-semibold"> <a href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
+                    </div>
+                    {% if post.author == user %}
+                        <a class="text-gray-600" href = "{% url 'profile' %}">By {{ post.author }} on {{ post.date_posted }}</a>
+                    {% else %}
+                    <a class="text-gray-600" href = "{% url 'anon-profile' post.author.profile.id %}">By {{ post.author }} on {{ post.date_posted }}</a>
+                    {% endif %}
+                    <!-- Render the CKEditor content using the |safe filter -->
+                    <div class="text-gray-800">{{ post.content|safe }}</div>
+                </div>
+            {% endfor %}
+        
+        </section>
+
+        <!-- Projects Section (25%) -->
+        <section class="w-1/4 bg-blue-100 rounded-lg shadow-md p-6">
+            <h2 class="text-3xl font-semibold mb-2">Checkout my other fun side-projects</h2>
+            <!-- Replace the following with links to your projects -->
+            <ul class="list-disc pl-4">
+                <li><a href="https://varshney-yash.github.io/infiniteScroll/" class="text-blue-600 hover:underline" target=_blank>Infinite Scroll</a></li>
+                <li><a href="https://varshney-yash.github.io/spacePix/" class="text-blue-600 hover:underline" target=_blank>SpacePix</a></li>
+                <li><a href="https://varshney-yash.github.io/musicPlayer/" class="text-blue-600 hover:underline" target=_blank>Music Player</a></li>
+                <!-- Add more project links here -->
+            </ul>
+        </section>
+    </div>
+</main>
+{% endblock content %}

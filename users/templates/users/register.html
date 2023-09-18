@@ -1,0 +1,51 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+<div class="flex justify-center items-center min-h-screen">
+  <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+    <h2 class="text-3xl font-semibold mb-4 text-center text-indigo-700">Register</h2>
+    <form method="POST">
+      {% csrf_token %}
+      
+      <div class="mb-4">
+        <label for="{{ form.username.id_for_label }}" class="block text-gray-700 text-sm font-bold mb-2">Username</label>
+        {{ form.username }}
+        {% if form.username.errors %}
+          <p class="text-red-500 text-xs mt-1">{{ form.username.errors }}</p>
+        {% endif %}
+      </div>
+
+      <div class="mb-4">
+        <label for="{{ form.email.id_for_label }}" class="block text-gray-700 text-sm font-bold mb-2">Email</label>
+        {{ form.email }}
+        {% if form.email.errors %}
+          <p class="text-red-500 text-xs mt-1">{{ form.email.errors }}</p>
+        {% endif %}
+      </div>
+
+      <div class="mb-4">
+        <label for="{{ form.password1.id_for_label }}" class="block text-gray-700 text-sm font-bold mb-2">Password</label>
+        {{ form.password1 }}
+        {% if form.password1.errors %}
+          <p class="text-red-500 text-xs mt-1">{{ form.password1.errors }}</p>
+        {% endif %}
+      </div>
+
+      <div class="mb-4">
+        <label for="{{ form.password2.id_for_label }}" class="block text-gray-700 text-sm font-bold mb-2">Confirm Password</label>
+        {{ form.password2 }}
+        {% if form.password2.errors %}
+          <p class="text-red-500 text-xs mt-1">{{ form.password2.errors }}</p>
+        {% endif %}
+      </div>
+
+      <button class="bg-indigo-500 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline-indigo active:bg-indigo-800" type="submit">
+        Register
+      </button>
+    </form>
+    <div class="mt-4 text-center text-sm">
+      <p>Already have an account? <a href="{% url 'user-login' %}" class="text-indigo-700 font-semibold hover:underline">Sign In</a></p>
+    </div>
+  </div>
+</div>
+{% endblock %}

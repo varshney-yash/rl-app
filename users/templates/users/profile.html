@@ -1,0 +1,105 @@
+{% extends "blog/base.html" %}
+{% block content %}
+<div class="content-section mx-auto max-w-xl p-6 bg-white rounded-lg shadow-md">
+    <div class="flex items-center space-x-4 mb-6">
+        <img class="rounded-full w-20 h-20" src="{{ user.profile.image.url }}" alt="{{ user.username }}">
+        <div>
+            <h2 class="text-2xl font-semibold text-gray-800">{{ user.username }}</h2>
+            <p class="text-gray-600">{{ user.email }}</p>
+            <p>{{ user.profile.bio }}</p>
+        </div>
+    </div>
+
+    <!-- Button to toggle the forms -->
+    <button id="edit-profile" class="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-full mb-4">
+        Edit Profile
+    </button>
+
+        <!-- User Update Form -->
+        <form method="POST" id="user-form" class="hidden">
+            {% csrf_token %}
+            <div class="mb-4">
+                <label for="{{ u_form.username.id_for_label }}" class="block text-gray-700 text-sm font-bold mb-2">Username</label>
+                {{ u_form.username }}
+                {% if u_form.username.errors %}
+                    <p class="text-red-500 text-xs mt-1">{{ u_form.username.errors }}</p>
+                {% endif %}
+            </div>
+
+            <div class="mb-4">
+                <label for="{{ u_form.email.id_for_label }}" class="block text-gray-700 text-sm font-bold mb-2">Email</label>
+                {{ u_form.email }}
+                {% if u_form.email.errors %}
+                    <p class="text-red-500 text-xs mt-1">{{ u_form.email.errors }}</p>
+                {% endif %}
+            </div>
+
+            <button class="bg-indigo-500 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline-indigo active:bg-indigo-800" type="submit">
+                Update User
+            </button>
+        </form>
+
+        <!-- Profile Update Form -->
+        <form method="POST" id="profile-form" class="hidden" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="mb-4">
+                <div>
+                    {% if user.profile.image.url %}
+                        <p class="text-gray-600"><a href="{{ user.profile.image.url }}" target="_blank" class="text-blue-500 hover:underline">Click here to view current profile photo</a></p>
+                    {% else %}
+                        <p class="text-gray-600">No profile photo uploaded</p>
+                    {% endif %}
+                </div>
+                <label for="{{ p_form.image.id_for_label }}" class="block text-gray-700 text-sm font-bold mb-2">Profile Image</label>
+                {{ p_form.image }}
+                {% if p_form.image.errors %}
+                    <p class="text-red-500 text-xs mt-1">{{ p_form.image.errors }}</p>
+                {% endif %}
+            </div>      
+
+            <button class="bg-indigo-500 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline-indigo active:bg-indigo-800" type="submit">
+                Update Profile Image
+            </button>
+        </form>
+        
+        
+        <form method="POST" id="profile-bio-form" class="hidden" >
+            {% csrf_token %}
+            <div class="mb-4">
+                <label for="{{ bio_form.bio.id_for_label }}" class="block text-gray-700 text-sm font-bold mb-2">Bio</label>
+                <div class="border border-gray-300 p-4">
+                    {{ bio_form.bio }}
+                </div>
+                {% if bio_form.bio.errors %}
+                    <p class="text-red-500 text-xs mt-1">{{ bio_form.bio.errors }}</p>
+                {% endif %}
+            </div>
+
+            <button class="bg-indigo-500 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline-indigo active:bg-indigo-800" type="submit">
+                Update Bio
+            </button>
+
+        </form>
+
+
+    <script>
+        // Function to toggle the visibility of the forms
+        document.getElementById('edit-profile').addEventListener('click', function () {
+            document.getElementById('user-form').classList.toggle('hidden');
+            document.getElementById('profile-form').classList.toggle('hidden');
+            document.getElementById('profile-bio-form').classList.toggle('hidden');
+        });
+        const emailField = document.getElementById('{{ u_form.email.id_for_label }}');
+        emailField.addEventListener('change', function () {
+            if (emailField.value === '') {
+                // Prompt the user for confirmation
+                const confirmDelete = confirm('Are you sure you want to remove your email?');
+                if (!confirmDelete) {
+                    // Restore the previous email value
+                    emailField.value = '{{ user.email }}';
+                }
+            }
+        });
+    </script>
+</div>
+{% endblock content %}

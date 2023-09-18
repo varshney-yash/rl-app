@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%23008aff'/%3E%3Ccircle cx='32' cy='32' r='25' fill='%23fff'/%3E%3Cpath d='M36.58 18.65a2.37 2.37 0 0 1 3.32 3.33l-9.1 9.09-3.33-3.32a2.37 2.37 0 1 1 3.33-3.32L32 27.63l4.58-4.58z' fill='%23008aff'/%3E%3Cpath d='M25.42 45.35a2.37 2.37 0 0 1-3.33-3.33l9.1-9.09 3.33 3.32a2.37 2.37 0 1 1-3.33 3.32L32 36.37l-4.58 4.58z' fill='%23008aff'/%3E%3C/svg%3E" type="image/svg+xml">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
+    <title>YV BLOGS</title>
+    <style>
+        /* Styles for the modal container */
+        #contact-modal {
+            z-index: 9999;
+        }
+
+        /* Styles for the modal content */
+        #contact-modal .bg-white {
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        /* Hide the modal by default */
+        #contact-modal.hidden {
+            display: none;
+        }
+        /* Style the dropdown menu */
+        #dropdown-menu {
+            transform: translateX(-100%);
+        }
+
+        /* Style the dropdown menu items */
+        #dropdown-menu a {
+            display: block;
+            padding: 8px 12px;
+            transition: background-color 0.2s, color 0.2s;
+        }
+
+        /* Hover effect for dropdown menu items */
+        #dropdown-menu a:hover {
+            background-color: #f0f4f8;
+            color: #1a72e8;
+        }
+        
+    </style>
+</head>
+<body>                     
+           
+  <header class="bg-blue-900 text-white py-4">
+    <div class="container mx-auto flex justify-between items-center">
+        <a href="{% url 'blog-home' %}" class="text-3xl font-semibold">My Blog</a>
+        <nav>
+            <ul class="flex space-x-6">
+                <li><a href="{% url 'blog-home' %}" class="hover:text-blue-500">Home</a></li>
+                <li><a href="#" class="hover:text-blue-500">Resume</a></li>
+                <li><a href="#" id="open-modal" class="hover:text-blue-500">Get in touch</a></li>
+                {% if user.is_authenticated %}
+                <li><a href="{% url 'post-create' %}" class="hover:text-blue-500">Create Post</a></li>
+                  <li>
+                    <div id="user-dropdown" class="group relative inline-block">
+                        <a href="#" class="hover:text-blue-500">
+                            {{ user.username }}
+                            <i class="fas fa-chevron-down ml-1"></i>
+                        </a>
+                        <ul id="dropdown-menu" class="absolute hidden mt-8 right-0 w-40 bg-white text-gray-700 p-2 rounded-lg shadow-lg">
+                            <li><a href="{% url 'profile' %}" class="block px-4 py-2 hover:bg-blue-100 hover:text-blue-500">Profile</a></li>
+                            <li><a href="{% url 'user-logout' %}" class="block px-4 py-2 hover:bg-blue-100 hover:text-blue-500">Logout</a></li>
+                        </ul>
+                    </div>
+                  </li>
+                {% else %}
+                <li><a href="{% url 'user-login' %}" class="hover:text-blue-500">Login</a></li>
+                <li><a href="{% url 'register' %}" class="hover:text-blue-500">Register</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+<div id="contact-modal" class="fixed top-0 left-0 flex justify-center items-center w-full h-full bg-black bg-opacity-50 hidden">
+  <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md text-center relative">
+      <button id="close-modal" class="absolute top-2 right-2 text-gray-600 hover:text-gray-800 text-2xl cursor-pointer">&times;</button>
+      <h2 class="text-2xl font-semibold mb-4">Get in Touch</h2>
+      <p class="mb-4">Feel free to reach me anytime:</p>
+      <div class="flex justify-center space-x-4">
+          <a href="https://www.instagram.com/yashvarshney17" target="_blank" class="text-blue-500 hover:underline">
+              <i class="fab fa-instagram fa-2x"></i> Instagram
+          </a>
+          <a href="https://www.linkedin.com/in/yashvarshney17" target="_blank" class="text-blue-500 hover:underline">
+              <i class="fab fa-linkedin fa-2x"></i> LinkedIn
+          </a>
+          <a href="mailto:17yashvarshney@gmail.com" class="text-blue-500 hover:underline">
+              <i class="fas fa-envelope fa-2x"></i> Email
+          </a>
+      </div>
+  </div>
+</div>
+
+
+{% if messages %}
+{% for message in messages %}
+<div id="message-container" class="bg-green-200 text-green-700 px-4 py-2 rounded-md mb-4">
+    {{  message }}
+</div>
+{% endfor %}
+<script>
+    setTimeout(function() {
+        var messageContainer = document.getElementById('message-container');
+        if (messageContainer) {
+            messageContainer.remove();
+        }
+    }, 5000);
+</script>
+{% endif %}
+
+{% block content %}{% endblock %}
+
+<script>
+    // Function to open the modal
+    document.getElementById('open-modal').addEventListener('click', function() {
+        document.getElementById('contact-modal').classList.remove('hidden');
+    });
+
+    // Function to close the modal
+    document.getElementById('close-modal').addEventListener('click', function() {
+        document.getElementById('contact-modal').classList.add('hidden');
+    });
+</script>
+<script>
+  const userDropdown = document.getElementById('user-dropdown');
+  const dropdownMenu = document.getElementById('dropdown-menu');
+
+  userDropdown.addEventListener('click', function () {
+      dropdownMenu.classList.toggle('hidden');
+  });
+
+  // Close the dropdown if the user clicks outside of it
+  window.addEventListener('click', function (event) {
+      if (!userDropdown.contains(event.target)) {
+          dropdownMenu.classList.add('hidden');
+      }
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+{% extends "blog/base.html" %}
+{% block content %}
+  <div class="container mx-auto mt-8">
+    <article class="bg-white rounded-lg shadow-md p-6 mb-6">
+      <div class="flex items-center mb-4">
+        <img class="rounded-full h-12 w-12 object-cover" src="{{ object.author.profile.image.url }}" alt="{{ object.author }}">
+        <div class="ml-4">
+          <a class="text-blue-500 hover:underline font-semibold" href="#">{{ object.author }}</a>
+          <p class="text-gray-400 text-sm">{{ object.date_posted|date:"F d, Y" }}</p>
+        </div>
+      </div>
+      {% if object.author == user %}
+        <div class="mb-4">
+          <a class="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-full text-sm mr-2" href="{% url 'post-update' object.id %}">Edit</a>
+          <a class="bg-red-500 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-full text-sm" href="{% url 'post-delete' object.id %}">Delete</a>
+        </div>
+      {% endif %}
+      <h2 class="text-3xl font-semibold text-gray-800">{{ object.title }}</h2>
+      <div class="mt-4">
+        <p class="text-gray-600 text-lg">{{ object.content | safe }}</p>
+      </div>
+    </article>
+  </div>
+{% endblock content %}

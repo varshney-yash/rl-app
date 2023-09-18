@@ -1,0 +1,31 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+<style>
+    header {
+      display: none;
+    }
+</style>
+<div class="flex justify-center items-center min-h-screen">
+  <div class="bg-gradient-to-r from-indigo-400 to-purple-600 p-8 rounded-lg shadow-md w-full max-w-md text-white">
+    <div class="text-center mb-6">
+      <p class="text-4xl font-semibold">You're Logged Out</p>
+      <p class="text-gray-200 text-lg">Thanks for visiting!</p>
+    </div>
+
+    <div class="text-center space-x-6 mb-8">
+      <a href="https://www.instagram.com/yashvarshney17" target="_blank" class="text-indigo-100 hover:text-indigo-200">
+        <i class="fab fa-instagram fa-3x"></i>
+      </a>
+      
+      <a href="https://www.linkedin.com/in/yashvarshney17" target="_blank" class="text-indigo-100 hover:text-indigo-200">
+        <i class="fab fa-linkedin fa-3x"></i>
+      </a>
+    </div>
+
+    <div class="text-center">
+      <a href="{% url 'user-login' %}" class="text-indigo-100 font-semibold hover:underline">Log In Again</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

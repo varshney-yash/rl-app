@@ -1,0 +1,21 @@
+{% extends "blog/base.html" %}
+{% block content %}
+<div class="content-section mx-auto max-w-xl p-6 bg-white rounded-lg shadow-md">
+    <div class="flex items-center space-x-4 mb-6">
+        {% if user.is_authenticated %}
+            <img class="rounded-full w-20 h-20" src="{{ profile.image.url }}" alt="{{ profile.user_id.user.username }}">
+        {% endif %}
+        <div>
+            <h2 class="text-2xl font-semibold text-gray-800">{{ user.username  }}</h2>
+            <br>
+            {% if user.is_authenticated %}
+                <p>{{profile.bio}}</p>
+                <br>
+                <p class="text-gray-700 text-sm">Contact admin to know more about this user.</p>
+            {% else %}
+                <p class="text-gray-700 text-sm">Please login/signup to view profiles</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock content %}

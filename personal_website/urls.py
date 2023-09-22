@@ -49,7 +49,3 @@ urlpatterns = [
          auth_views.PasswordResetConfirmView.as_view(template_name='users/password_reset_confirm.html'),
          name='password_reset_confirm'),
 ]
-
-if settings.ADMIN_ENABLED:
-    urlpatterns += patterns('',(r'^admin/(.*)', include(admin.site.urls))
-

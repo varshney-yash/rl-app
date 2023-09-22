@@ -51,11 +51,5 @@ urlpatterns = [
 ]
 
 if settings.ADMIN_ENABLED:
-    urlpatterns += patterns('',
-        (r'^admin/(.*)', include(admin.site.urls))
-
-if not reachable:
-    urlpatterns += [
-        path('500/', custom_error_page, name='custom_error_page'),
-    ]
+    urlpatterns += patterns('',(r'^admin/(.*)', include(admin.site.urls))
 

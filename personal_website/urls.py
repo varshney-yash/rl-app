@@ -35,8 +35,6 @@ print(reachable)
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    # path('',index),
     path('',include('blog.urls')),
     path('',include('users.urls')),
     path('login/',auth_views.LoginView.as_view(template_name='users/login.html'),name='user-login'),
@@ -52,7 +50,9 @@ urlpatterns = [
          name='password_reset_confirm'),
 ]
 
-reachable = False
+if settings.ADMIN_ENABLED:
+    urlpatterns += patterns('',
+        (r'^admin/(.*)', include(admin.site.urls))
 
 if not reachable:
     urlpatterns += [

@@ -4,7 +4,7 @@ from django.contrib import messages
 from .forms import userRegisterForm,UserUpdateForm,ProfileUpdateForm, BioUpdateForm
 from .models import Profile
 from django.views.generic import DetailView
-import smtplib
+import smtplib, random, string
 from email.message import EmailMessage
 
 SMTP_SERVER = "smtp-relay.brevo.com"
@@ -12,17 +12,27 @@ SMTP_PORT = 587
 SMTP_USERNAME = "17yashvarshney@gmail.com"
 SMTP_PASSWORD = "fcI5rm6Gk02aZ3dB"
 
+def generate_random_token():
+    return ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(16))
+
+
 def register(request):
     if request.method == 'POST':
         form = userRegisterForm(request.POST)
         if form.is_valid():
             form.save()
             username = form.cleaned_data.get('username')
+            user = form.instance
             messages.success(request,f'Thanks for joining, {username}. Please login to continue!')
 
+            profile = Profile.objects.get(user=user)
+            profile.verification_token = generate_random_token()
+            profile.save()
+            verification_link = f"http://{request.get_host()}/verify/{profile.verification_token}/"
+
             msg = EmailMessage()
-            msg.set_content(f"Hi, {username}! Thanks for registering to my blog application. \n This has been made with ❤️ by Yash Varshney")
-            msg["Subject"] = "Welcome to my blog application"
+            msg.set_content(f"Hi, {username}! Here is your verification link:- {verification_link}. \n\n\n Made with ❤️ by Yash Varshney")
+            msg["Subject"] = "Welcome to YVblogs!"
             msg["From"] = SMTP_USERNAME
             msg["To"] = form.cleaned_data.get('email')
         

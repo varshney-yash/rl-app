@@ -6,6 +6,7 @@ class Profile(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE)
     image = CloudinaryField('image')
     bio = models.TextField(default='Hi! I am writing on varshneyblogs',null=True)
+    verification_token = models.CharField(max_length=32, blank=True, null=True) 
 
     def __str__(self):
         return f'{self.user.username} Profile'

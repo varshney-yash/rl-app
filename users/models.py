@@ -18,4 +18,3 @@ class Profile(models.Model):
             default_image_url = 'image/upload/v1698819759/anon_onzkni.jpg'
             self.image = default_image_url
         super().save(*args, **kwargs)
-

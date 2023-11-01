@@ -8,6 +8,71 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
     <title>YV BLOGS</title>
     <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        header {
+            background: #0077B6;
+            color: white;
+            padding: 1rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            text-decoration: none;
+            color: white;
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav ul {
+            list-style: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav ul li {
+            margin: 0 1rem;
+        }
+
+        .nav ul li a {
+            text-decoration: none;
+            color: white;
+        }
+
+        @media screen and (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .nav {
+                margin-top: 1rem;
+            }
+
+            .nav ul {
+                flex-direction: column;
+            }
+
+            .nav ul li {
+                margin: 0.5rem 0;
+            }
+        }
         /* Styles for the modal container */
         #contact-modal {
             z-index: 9999;

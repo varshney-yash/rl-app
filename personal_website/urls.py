@@ -31,7 +31,7 @@ except OperationalError:
 else:
     reachable = True
 
-print(reachable)
+print('Database is alive? ----',reachable)
 
 
 urlpatterns = [

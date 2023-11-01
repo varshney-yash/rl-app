@@ -17,12 +17,10 @@ from .models import Post
 def home(request):
     client_ip = get_client_ip(request)
     posts = Post.objects.all()
-    print(posts)
     context={
         'posts':posts,
         'title':'Test'
         }
-    print(context)
     return render(request,'blog/home.html',context)
 
 class PostListView(ListView):

@@ -37,6 +37,7 @@ def register(request):
             msg["To"] = form.cleaned_data.get('email')
         
             with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
+                print('in smtp')
                 server.starttls()
                 server.login(SMTP_USERNAME, SMTP_PASSWORD)
                 server.send_message(msg)

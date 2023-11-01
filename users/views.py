@@ -4,6 +4,13 @@ from django.contrib import messages
 from .forms import userRegisterForm,UserUpdateForm,ProfileUpdateForm, BioUpdateForm
 from .models import Profile
 from django.views.generic import DetailView
+import smtplib
+from email.message import EmailMessage
+
+SMTP_SERVER = "smtp-relay.brevo.com"
+SMTP_PORT = 587
+SMTP_USERNAME = "17yashvarshney@gmail.com"
+SMTP_PASSWORD = "fcI5rm6Gk02aZ3dB"
 
 def register(request):
     if request.method == 'POST':
@@ -12,6 +19,17 @@ def register(request):
             form.save()
             username = form.cleaned_data.get('username')
             messages.success(request,f'Thanks for joining, {username}. Please login to continue!')
+
+            msg = EmailMessage()
+            msg.set_content(f"Hi, {username}! Thanks for registering to my blog application. \n This has been made with ❤️ by Yash Varshney")
+            msg["Subject"] = "Welcome to my blog application"
+            msg["From"] = SMTP_USERNAME
+            msg["To"] = form.cleaned_data.get('email')
+        
+            with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
+                server.starttls()
+                server.login(SMTP_USERNAME, SMTP_PASSWORD)
+                server.send_message(msg)
             return redirect('user-login')
     else:
         form = userRegisterForm()

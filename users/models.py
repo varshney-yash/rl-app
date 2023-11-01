@@ -14,7 +14,7 @@ class Profile(models.Model):
         # Check if the image field is not set or empty
         if not self.image:
             # Set the default image URL
-            default_image_url = 'image/upload/v1693301786/samples/people/boy-snow-hoodie.jpg'  # Replace with your default image URL
+            default_image_url = 'image/upload/v1698819759/anon_onzkni.jpg'
             self.image = default_image_url
         super().save(*args, **kwargs)
 

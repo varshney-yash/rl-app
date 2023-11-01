@@ -40,6 +40,7 @@ def register(request):
                 server.starttls()
                 server.login(SMTP_USERNAME, SMTP_PASSWORD)
                 server.send_message(msg)
+                print('message sent!')
             return redirect('user-login')
     else:
         form = userRegisterForm()

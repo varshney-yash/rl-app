@@ -29,7 +29,7 @@ def register(request):
             profile.verification_token = generate_random_token()
             profile.save()
             verification_link = f"http://{request.get_host()}/verify/{profile.verification_token}/"
-
+            print(verification_link)
             msg = EmailMessage()
             msg.set_content(f"Hi, {username}! Here is your verification link:- {verification_link}. \n\n\n Made with ❤️ by Yash Varshney")
             msg["Subject"] = "Welcome to YVblogs!"

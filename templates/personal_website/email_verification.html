@@ -5,7 +5,7 @@
 </head>
 <body>
     {% if verification_successful %}
-        <p>Email verification successful. You can now log in.</p>
+        <p>Email verification successful. You can continue blogging.</p>
         <a href="{% url 'user-login' %}">Login</a>
     {% elif invalid_token %}
         <p>Invalid verification token. Please check your email for the correct link.</p>

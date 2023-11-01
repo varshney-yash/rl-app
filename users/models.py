@@ -7,7 +7,8 @@ class Profile(models.Model):
     image = CloudinaryField('image')
     bio = models.TextField(default='Hi! I am writing on varshneyblogs',null=True)
     verification_token = models.CharField(max_length=32, blank=True, null=True) 
-
+    verified = models.BooleanField(default=False)
+    
     def __str__(self):
         return f'{self.user.username} Profile'
     

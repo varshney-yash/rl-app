@@ -1,6 +1,8 @@
 from datetime import datetime
 from django.shortcuts import render
 from django.http import HttpResponse
+from users.models import Profile
+from django.http import Http404, HttpResponse
 
 
 def index(request):
@@ -15,5 +17,22 @@ def index(request):
     '''
     return HttpResponse(html)
 
-def custom_error_page(request):
-    return render(request,'index/custom_error_page.html')
+def email_verification(request, token):
+    print(token)
+    context = {}
+    print('##*')
+    try:
+        print('##')
+        profile = Profile.objects.filter(verification_token=token).first()
+        if profile:
+            print('**', profile)
+            profile.verified = True
+            profile.save()
+            context['verification_successful'] = True
+        else:
+            context['invalid_token'] = True
+        print(context, '--context')
+    except Http404:
+        context['invalid_token'] = True
+
+    return render(request, 'personal_website/email_verification.html', context)

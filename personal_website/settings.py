@@ -27,6 +27,7 @@ DEBUG = False
 
 # ALLOWED_HOSTS = ['localhost','127.0.0.1', '.vercel.app']
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '127.0.0.1').split(',')
+ALLOWED_HOSTS += 'localhost'.split(',')
 
 
 # Application definition

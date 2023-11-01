@@ -23,7 +23,7 @@ def register(request):
             form.save()
             username = form.cleaned_data.get('username')
             user = form.instance
-            messages.success(request,f'Thanks for joining, {username}. Please login to continue!')
+            messages.success(request,f'Thanks for joining, {username}. Please login to continue! Also, check your inbox for verification link')
 
             profile = Profile.objects.get(user=user)
             profile.verification_token = generate_random_token()

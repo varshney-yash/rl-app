@@ -32,6 +32,7 @@ def register(request):
             print(verification_link)
             msg = EmailMessage()
             msg.set_content(f"Hi, {username}! Here is your verification link:- {verification_link}. \n\n\n Made with ❤️ by Yash Varshney")
+            print(form.cleaned_data.get('email'))
             msg["Subject"] = "Welcome to YVblogs!"
             msg["From"] = SMTP_USERNAME
             msg["To"] = form.cleaned_data.get('email')

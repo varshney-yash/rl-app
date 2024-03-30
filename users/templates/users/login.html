@@ -1,12 +1,39 @@
 {% extends 'blog/base.html' %}
 
 {% block content %}
+<style>
+  input, select, textarea {
+    border: 1px solid #ccc; 
+    padding: 10px;
+    width: 100%;
+    box-sizing: border-box; 
+    margin-bottom: 10px; 
+  }
+  
+  input:focus, select:focus, textarea:focus {
+    border-color: #4A90E2; 
+    outline: none; 
+  }
+  
+  .error-message, .error-summary {
+    color: #ff0000; 
+    font-size: 0.875rem; 
+    margin-top: 10px; 
+  }
+  
+  .error-summary {
+    background-color: #f8d7da; 
+    border-color: #f5c6cb;
+    padding: 10px;
+    border-radius: 4px; 
+  }
+</style>
 <div class="flex justify-center items-center min-h-screen">
   <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
     <h2 class="text-3xl font-semibold mb-4 text-center text-indigo-700">Log In</h2>
     
     {% if form.errors %}
-    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4">
+    <div class="error-summary">
       <strong class="font-bold">Oops!</strong>
       <span class="block sm:inline">{{ form.errors }}</span>
     </div>
@@ -18,11 +45,17 @@
       <div class="mb-4">
         <label for="{{ form.username.id_for_label }}" class="block text-gray-700 text-sm font-bold mb-2">Username</label>
         {{ form.username }}
+        {% if form.username.errors %}
+          <p class="error-message">{{ form.username.errors }}</p>
+        {% endif %}
       </div>
 
       <div class="mb-4">
         <label for="{{ form.password.id_for_label }}" class="block text-gray-700 text-sm font-bold mb-2">Password</label>
         {{ form.password }}
+        {% if form.password.errors %}
+          <p class="error-message">{{ form.password.errors }}</p>
+        {% endif %}
       </div>
 
       <button class="bg-indigo-500 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline-indigo active:bg-indigo-800" type="submit">

@@ -1,6 +1,25 @@
 {% extends 'blog/base.html' %}
 
 {% block content %}
+<style>
+  input, select, textarea {
+    border: 1px solid #ccc; 
+    padding: 10px;
+    width: 100%;
+    box-sizing: border-box; 
+    margin-bottom: 10px; 
+  }
+  
+  input:focus, select:focus, textarea:focus {
+    border-color: #4A90E2; 
+    outline: none; 
+  }
+  
+  .error-message {
+    color: #ff0000; 
+    font-size: 0.875rem; 
+  }
+</style>
 <div class="flex justify-center items-center min-h-screen">
   <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
     <h2 class="text-3xl font-semibold mb-4 text-center text-indigo-700">Register</h2>
@@ -11,7 +30,7 @@
         <label for="{{ form.username.id_for_label }}" class="block text-gray-700 text-sm font-bold mb-2">Username</label>
         {{ form.username }}
         {% if form.username.errors %}
-          <p class="text-red-500 text-xs mt-1">{{ form.username.errors }}</p>
+          <p class="error-message">{{ form.username.errors }}</p>
         {% endif %}
       </div>
 
@@ -19,7 +38,7 @@
         <label for="{{ form.email.id_for_label }}" class="block text-gray-700 text-sm font-bold mb-2">Email</label>
         {{ form.email }}
         {% if form.email.errors %}
-          <p class="text-red-500 text-xs mt-1">{{ form.email.errors }}</p>
+          <p class="error-message">{{ form.email.errors }}</p>
         {% endif %}
       </div>
 
@@ -27,7 +46,7 @@
         <label for="{{ form.password1.id_for_label }}" class="block text-gray-700 text-sm font-bold mb-2">Password</label>
         {{ form.password1 }}
         {% if form.password1.errors %}
-          <p class="text-red-500 text-xs mt-1">{{ form.password1.errors }}</p>
+          <p class="error-message">{{ form.password1.errors }}</p>
         {% endif %}
       </div>
 
@@ -35,7 +54,7 @@
         <label for="{{ form.password2.id_for_label }}" class="block text-gray-700 text-sm font-bold mb-2">Confirm Password</label>
         {{ form.password2 }}
         {% if form.password2.errors %}
-          <p class="text-red-500 text-xs mt-1">{{ form.password2.errors }}</p>
+          <p class="error-message">{{ form.password2.errors }}</p>
         {% endif %}
       </div>
 

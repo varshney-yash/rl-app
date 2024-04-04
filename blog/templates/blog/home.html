@@ -1,11 +1,31 @@
 {% extends "blog/base.html" %}
 
 {% block content %}
-<main class="container mx-auto mt-6">
-    <h2 class="text-3xl font-semibold mb-4">Latest Blog Posts</h2>
-    <div class="flex justify-center space-x-4">
-        <!-- Blog Posts Section (75%) -->
-        <section class="w-3/4 bg-gray-100 rounded-lg shadow-md p-6" style="max-height: calc(100vh - 200px); overflow-y: auto; overflow-x: hidden;">            <!-- Replace the following with your blog post content -->
+
+<style>
+    @media (max-width: 768px) {
+        .projects-section {
+            display: none;
+        }
+        .blog-posts-section {
+            width: 100%;
+        }
+    }
+
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+</style>
+
+<main class="container mx-auto px-4 mt-6">
+
+    <h2 class="text-2xl md:text-3xl font-semibold mb-4">Latest Blog Posts</h2>
+
+    <div class="flex flex-wrap justify-center -mx-4">
+
+        <!-- Blog Posts Section -->
+        <section class="blog-posts-section flex-1 min-w-full md:min-w-0 md:w-3/4 px-4 bg-gray-100 rounded-lg shadow-md p-6" style="max-height: calc(100vh - 200px); overflow-y: auto;">
             {% for post in posts %}
                 <div class="mb-6 bg-white rounded-lg p-4">
                     <div class="flex items-center space-x-4 mb-2">
@@ -17,48 +37,25 @@
                     {% if post.author == user %}
                         <a class="text-gray-600" href = "{% url 'profile' %}">By {{ post.author }} on {{ post.date_posted }}</a>
                     {% else %}
-                    <a class="text-gray-600" href = "{% url 'anon-profile' post.author.profile.id %}">By {{ post.author }} on {{ post.date_posted }}</a>
+                        <a class="text-gray-600" href = "{% url 'anon-profile' post.author.profile.id %}">By {{ post.author }} on {{ post.date_posted }}</a>
                     {% endif %}
-                    <!-- Render the CKEditor content using the |safe filter -->
                     <div class="text-gray-800">{{ post.content|safe }}</div>
                 </div>
             {% endfor %}
-        
         </section>
 
-        <!-- Projects Section (25%) -->
-        <section id="projects-section" class="w-1/4 bg-blue-100 rounded-lg shadow-md p-6">
-            <h2 class="text-3xl font-semibold mb-2">Checkout my other fun side-projects</h2>
-            <!-- Replace the following with links to your projects -->
+        <!-- Projects Section -->
+        <section class="projects-section w-full md:w-1/4 px-4 bg-blue-100 rounded-lg shadow-md p-6">
+            <h2 class="text-2xl md:text-3xl font-semibold mb-2">Checkout my other fun side-projects</h2>
             <ul class="list-disc pl-4">
                 <li><a href="https://varshney-yash.github.io/infiniteScroll/" class="text-blue-600 hover:underline" target=_blank>Infinite Scroll</a></li>
                 <li><a href="https://varshney-yash.github.io/spacePix/" class="text-blue-600 hover:underline" target=_blank>SpacePix</a></li>
                 <li><a href="https://varshney-yash.github.io/musicPlayer/" class="text-blue-600 hover:underline" target=_blank>Music Player</a></li>
-                <!-- Add more project links here -->
             </ul>
         </section>
+
     </div>
+
 </main>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    console.log('js working');
-    $(document).ready(function () {
-        // Check screen width on page load and on window resize
-        function checkScreenSize() {
-            if ($(window).width() <= 768) { // Adjust the screen width as needed
-                $('#projects-section').hide();
-            } else {
-                $('#projects-section').show();
-            }
-        }
 
-        // Initial check
-        checkScreenSize();
-
-        // Check when the window is resized
-        $(window).resize(function () {
-            checkScreenSize();
-        });
-    });
-</script>
 {% endblock content %}
